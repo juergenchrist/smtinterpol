@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+
+<head>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="stylesheet" href="tree.css">
+  <script language="Javascript" type="text/javascript" src="./textparser_and_resolver.js"></script>
+  <title>SMT Proof Tree</title>
+</head>
+
+<body>
+  <textarea name="name" id="input_text" rows="8" cols="80" placeholder="Put your given SMT solver output here" class="input"></textarea>
+  <br>
+  <button type="button" name="button" id="visualizer">Start SMT proof</button>
+  <br>
+  <p id="legend">
+    <span class="inner_node_literals" style="border-radius: 5px; padding: 3px 8px">Inner node literals</span>
+    <span class="clause_literals" style="border-radius: 5px; padding: 3px 8px">Clause literals</span>
+    <span class="lemma_literals" style="border-radius: 5px; padding: 3px 8px">Lemma literals</span>
+    <span class="node_pivot" style="border-radius: 5px; padding: 3px 8px">Pivot</span>
+    <span class="intermediate_result" style="border-radius: 5px; padding: 3px 8px">Intermediate result</span>
+  </p>
+
+  <ul class="tree" id="mytree">
+    <!-- Test tree
+    <li><span class="arrow">Node</span>
+      <ul class="nested">
+        <li>Leaf</li>
+        <li>Leaf</li>
+        <li><span class="arrow">Node</span>
+          <ul class="nested">
+            <li>Leaf</li>
+            <li>Leaf</li>
+            <li><span class="arrow">Node</span>
+              <ul class="nested">
+                <li>Leaf</li>
+                <li>Leaf</li>
+                <li>Leaf</li>
+                <li>Leaf</li>
+              </ul>
+            </li>
+          </ul>
+        </li>
+      </ul>
+    </li> -->
+  </ul>
+
+</body>
+
+</html>

@@ -1,0 +1,55 @@
+//// Eingabeskript für SMTInterpol
+
+(set-option :print-success false)
+(set-option :produce-interpolants true)
+(set-info :status unsat)
+(set-logic QF_UFLIA)
+(declare-fun f (Int) Int)
+(declare-fun x () Int)
+(declare-fun y () Int)
+(assert (and (= x (f x)) (= x y) (= (f y) (+ x 1))))
+(check-sat)
+(get-proof)
+(exit)
+
+//// Beweis mit Umschreibschritten der Eingabeformel
+
+(@res (@res (@lemma (! (or (not (! (= (f y) (+ x 1)) :quotedCC)) (not (! (= x (f x)) :quotedCC)) (not (! (= (f y) (f x)) :quotedCC))) :CC ((! (= (+ x 1) x) :quotedCC) :subpath ((+ x 1) (f y) (f x) x)))) (! (@lemma (! (or (! (= (f y) (f x)) :quotedCC) (not (! (= x y) :quotedCC))) :CC ((! (= (f y) (f x)) :quotedCC) :subpath ((f y) (f x))))) :pivot (! (= (f y) (f x)) :quotedCC))) (! (@clause (@eq (@eq (@split (! (@eq (@asserted (and (= x (f x)) (= x y) (= (f y) (+ x 1)))) (@rewrite (! (= (and (= x (f x)) (= x y) (= (f y) (+ x 1))) (not (or (not (= x (f x))) (not (= x y)) (not (= (f y) (+ x 1)))))) :andToOr))) :notOr) (not (not (= (f y) (+ x 1))))) (@rewrite (! (= (not (not (= (f y) (+ x 1)))) (= (f y) (+ x 1))) :notSimp))) (@rewrite (! (= (= (f y) (+ x 1)) (! (= (f y) (+ x 1)) :quotedCC)) :intern))) (! (! (= (f y) (+ x 1)) :quotedCC) :input)) :pivot (! (= (f y) (+ x 1)) :quotedCC)) (! (@clause (@eq (@eq (@split (! (@eq (@asserted (and (= x (f x)) (= x y) (= (f y) (+ x 1)))) (@rewrite (! (= (and (= x (f x)) (= x y) (= (f y) (+ x 1))) (not (or (not (= x (f x))) (not (= x y)) (not (= (f y) (+ x 1)))))) :andToOr))) :notOr) (not (not (= x y)))) (@rewrite (! (= (not (not (= x y))) (= x y)) :notSimp))) (@rewrite (! (= (= x y) (! (= x y) :quotedCC)) :intern))) (! (! (= x y) :quotedCC) :input)) :pivot (! (= x y) :quotedCC)) (! (@clause (@eq (@eq (@split (! (@eq (@asserted (and (= x (f x)) (= x y) (= (f y) (+ x 1)))) (@rewrite (! (= (and (= x (f x)) (= x y) (= (f y) (+ x 1))) (not (or (not (= x (f x))) (not (= x y)) (not (= (f y) (+ x 1)))))) :andToOr))) :notOr) (not (not (= x (f x))))) (@rewrite (! (= (not (not (= x (f x)))) (= x (f x))) :notSimp))) (@rewrite (! (= (= x (f x)) (! (= x (f x)) :quotedCC)) :intern))) (! (! (= x (f x)) :quotedCC) :input)) :pivot (! (= x (f x)) :quotedCC)))
+
+//// Resolutionsbeweis (ohne Umschreibschritte)
+
+(@res (@res (@lemma (! (or (not (! (= (f y) (+ x 1)) :quotedCC)) (not (! (= x (f x)) :quotedCC)) (not (! (= (f y) (f x)) :quotedCC))) :CC ((! (= (+ x 1) x) :quotedCC) :subpath ((+ x 1) (f y) (f x) x)))) (! (@lemma (! (or (! (= (f y) (f x)) :quotedCC) (not (! (= x y) :quotedCC))) :CC ((! (= (f y) (f x)) :quotedCC) :subpath ((f y) (f x))))) :pivot (! (= (f y) (f x)) :quotedCC))) (! (@clause (@asserted (! (= (f y) (+ x 1)) :quotedCC)) (! (! (= (f y) (+ x 1)) :quotedCC) :input)) :pivot (! (= (f y) (+ x 1)) :quotedCC)) (! (@clause (@asserted (! (= x y) :quotedCC)) (! (! (= x y) :quotedCC) :input)) :pivot (! (= x y) :quotedCC)) (! (@clause (@asserted (! (= x (f x)) :quotedCC)) (! (! (= x (f x)) :quotedCC) :input)) :pivot (! (= x (f x)) :quotedCC)))
+
+//// Beweis lesbarer formatiert mit allen Klauseln
+
+(@res
+	(@res
+		(@lemma (! (or (not (! (= (f y) (+ x 1)) :quotedCC)) (not (! (= x (f x)) :quotedCC)) (not (! (= (f y) (f x)) :quotedCC))) :CC ((! (= (+ x 1) x) :quotedCC) :subpath ((+ x 1) (f y) (f x) x))))
+		// != f(y)=x+1 \/ != x=f(x) \/ != f(x)=f(y)
+
+		(! (@lemma (! (or (! (= (f y) (f x)) :quotedCC) (not (! (= x y) :quotedCC))) :CC ((! (= (f y) (f x)) :quotedCC) :subpath ((f y) (f x)))))
+		// f(x)=f(y) \/ != x=y
+		:pivot (! (= (f y) (f x)) :quotedCC)))
+		// != f(y)=x+1 \/ != x=f(x) \/ != x=y
+
+	(! (@clause (@asserted (! (= (f y) (+ x 1)) :quotedCC)) (! (! (= (f y) (+ x 1)) :quotedCC) :input))
+	// f(y)=x+1
+	:pivot (! (= (f y) (+ x 1)) :quotedCC))
+	// != x=f(x) \/ != x=y
+
+	(! (@clause (@asserted (! (= x y) :quotedCC)) (! (! (= x y) :quotedCC) :input))
+	// x=y
+	:pivot (! (= x y) :quotedCC))
+	// != x=f(x)
+
+	(! (@clause (@asserted (! (= x (f x)) :quotedCC)) (! (! (= x (f x)) :quotedCC) :input))
+	// x=f(x)
+	:pivot (! (= x (f x)) :quotedCC)))
+	// {}
+
+
+/// Resolutionsregel
+
+C_1 \/ ~l   C_2 \/ l
+--------------------
+     C_1 \/ C_2

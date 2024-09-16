@@ -1,0 +1,119 @@
+body {
+  font-family: sans-serif;
+}
+
+ul, .tree {
+  list-style-type: none;
+}
+
+#input_text{
+  border-radius: 5px;
+  display: inline-block;
+  padding: 3px 8px;
+  margin: 10px;
+}
+
+#visualizer {
+  border-radius: 5px;
+  display: inline-block;
+  padding: 3px 8px;
+  margin: 10px;
+}
+
+.tree {
+  min-height: 20px;
+  padding: 19px;
+  margin-bottom: 20px;
+}
+
+.tree li {
+  padding: 10px 5px 0 5px;
+}
+
+.tree li span {
+  border-radius: 5px;
+  display: inline-block;
+  padding: 4px 8px;
+}
+
+.box {
+  cursor: pointer;
+  -webkit-user-select: none;
+  /* Safari 3.1+ */
+  -moz-user-select: none;
+  /* Firefox 2+ */
+  -ms-user-select: none;
+  /* IE 10+ */
+  user-select: none;
+}
+
+.box::before {
+  content: "\2610";
+  color: black;
+  display: inline-block;
+  margin-right: 6px;
+}
+
+.check-box::before {
+  content: "\2611";
+  color: dodgerblue;
+}
+
+.arrow {
+  cursor: pointer;
+  user-select: none;
+}
+
+.arrow::before {
+  content: "\25B6";
+  color: black;
+  display: inline-block;
+  margin-right: 6px;
+}
+
+.arrow-down::before {
+  -ms-transform: rotate(90deg);
+  /* IE 9 */
+  -webkit-transform: rotate(90deg);
+  /* Safari */
+  transform: rotate(90deg);
+}
+
+.nested {
+  display: none;
+}
+
+.active {
+  display: block;
+}
+
+.inner_node_literals {
+  color: green;
+  border: 1px solid green;
+}
+
+.clause_literals {
+  color: purple;
+  border: 1px solid purple;
+}
+
+.lemma_literals {
+  color: orange;
+  border: 1px solid orange;
+}
+
+.node_pivot {
+  color: black;
+  border: 1px solid black;
+}
+
+.intermediate_result {
+  color: dodgerblue;
+  border: 1px solid dodgerblue;
+}
+
+#legend {
+  margin-top: 20px;
+  margin-left: 20px;
+  display: none;
+}
